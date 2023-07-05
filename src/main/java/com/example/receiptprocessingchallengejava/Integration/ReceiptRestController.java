@@ -1,6 +1,8 @@
 package com.example.receiptprocessingchallengejava.Integration;
 import com.example.receiptprocessingchallengejava.Entities.Receipt;
+import com.example.receiptprocessingchallengejava.HelperFunctions.DateAnalyzer;
 import com.example.receiptprocessingchallengejava.HelperFunctions.DollarAnalyzer;
+import com.example.receiptprocessingchallengejava.HelperFunctions.TimeAnalyzer;
 import com.google.gson.Gson;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
@@ -47,14 +49,22 @@ public class ReceiptRestController {
         String purchaseTime = workingReceipt.getPurchaseTime();
         String total = workingReceipt.getTotal();
         int points = 0;
-        int retailerNameLen = CharCounter.charCounterHelper(workingReceipt.getRetailer());
+        int retailerNameLen = CharCounter.charCounterHelper(retailer);
         boolean totalIsWhole = DollarAnalyzer.dollarIsWhole(Float.parseFloat(total));
         boolean totalIsMultiple = DollarAnalyzer.dollarIsMultipleOf(Float.parseFloat(total), 0.25F);
+        boolean dayIsOdd = DateAnalyzer.dayIsOdd(workingReceipt.getPurchaseDate());
+        boolean purchaseIsBetween = TimeAnalyzer.timeIsBetween("16:00", "14:00", purchaseTime);
         if(totalIsWhole){
             points += 50;
         }
         if(totalIsMultiple){
             points += 25;
+        }
+        if(dayIsOdd){
+            points += 6;
+        }
+        if(purchaseIsBetween){
+            points += 10;
         }
         points += retailerNameLen;
         HashMap<String, String> pointAmount = new HashMap<>();
