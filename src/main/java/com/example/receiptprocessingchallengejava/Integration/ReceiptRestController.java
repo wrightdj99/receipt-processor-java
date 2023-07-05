@@ -1,8 +1,7 @@
 package com.example.receiptprocessingchallengejava.Integration;
 import com.example.receiptprocessingchallengejava.Entities.Receipt;
-import com.example.receiptprocessingchallengejava.HelperFunctions.DollarRounder;
+import com.example.receiptprocessingchallengejava.HelperFunctions.DollarAnalyzer;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,12 +48,15 @@ public class ReceiptRestController {
         String total = workingReceipt.getTotal();
         int points = 0;
         int retailerNameLen = CharCounter.charCounterHelper(workingReceipt.getRetailer());
-        boolean totalIsWhole = DollarRounder.dollarRounderHelper(Float.parseFloat(total));
-        int wholeNumPoints = 0;
+        boolean totalIsWhole = DollarAnalyzer.dollarIsWhole(Float.parseFloat(total));
+        boolean totalIsMultiple = DollarAnalyzer.dollarIsMultipleOf(Float.parseFloat(total), 0.25F);
         if(totalIsWhole){
-            wholeNumPoints += 50;
+            points += 50;
         }
-        points += retailerNameLen + wholeNumPoints;
+        if(totalIsMultiple){
+            points += 25;
+        }
+        points += retailerNameLen;
         HashMap<String, String> pointAmount = new HashMap<>();
         pointAmount.put("points", String.valueOf(points));
         return pointAmount;
