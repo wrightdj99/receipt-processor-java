@@ -1,11 +1,14 @@
 package com.example.receiptprocessingchallengejava.Integration;
 import com.example.receiptprocessingchallengejava.Entities.Receipt;
+import com.example.receiptprocessingchallengejava.HelperFunctions.DollarRounder;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.*;
+import com.example.receiptprocessingchallengejava.HelperFunctions.CharCounter;
 
 @EnableAutoConfiguration(exclude = {org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration.class})
 @RestController
@@ -39,9 +42,22 @@ public class ReceiptRestController {
 
     @GetMapping(value = "/receipts/{id}/points")
     public Object getPoints(@PathVariable("id") String receiptId){
-        HashMap<String, String> returnHash = new HashMap<>();
-        returnHash.put("id", receiptId);
-        return returnHash;
+        Receipt workingReceipt = receiptLibrary.get(receiptId);
+        String retailer = workingReceipt.getRetailer();
+        String purchaseDate = workingReceipt.getPurchaseDate().toString();
+        String purchaseTime = workingReceipt.getPurchaseTime();
+        String total = workingReceipt.getTotal();
+        int points = 0;
+        int retailerNameLen = CharCounter.charCounterHelper(workingReceipt.getRetailer());
+        boolean totalIsWhole = DollarRounder.dollarRounderHelper(Float.parseFloat(total));
+        int wholeNumPoints = 0;
+        if(totalIsWhole){
+            wholeNumPoints += 50;
+        }
+        points += retailerNameLen + wholeNumPoints;
+        HashMap<String, String> pointAmount = new HashMap<>();
+        pointAmount.put("points", String.valueOf(points));
+        return pointAmount;
     }
 
 }
