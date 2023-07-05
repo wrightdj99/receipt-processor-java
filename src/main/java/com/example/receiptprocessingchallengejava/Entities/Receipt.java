@@ -4,16 +4,20 @@ public class Receipt {
    private String retailer;
    private Date purchaseDate;
    private String purchaseTime;
-   private Item[] items;
    private String total;
 
    public Receipt(){
-       this.retailer = retailer;
-       this.purchaseDate = purchaseDate;
-       this.purchaseTime = purchaseTime;
-       this.items = items;
-       this.total = total;
    }
+
+    @Override
+    public String toString() {
+        return "Receipt{" +
+                "retailer='" + retailer + '\'' +
+                ", purchaseDate=" + purchaseDate +
+                ", purchaseTime='" + purchaseTime + '\'' +
+                ", total='" + total + '\'' +
+                '}';
+    }
 
     public String getRetailer() {
         return retailer;
@@ -27,9 +31,6 @@ public class Receipt {
         return purchaseTime;
     }
 
-    public Item[] getItems() {
-        return items;
-    }
 
     public String getTotal() {
         return total;
@@ -47,11 +48,32 @@ public class Receipt {
         this.purchaseTime = purchaseTime;
     }
 
-    public void setItems(Item[] items) {
-        this.items = items;
-    }
 
     public void setTotal(String total) {
         this.total = total;
     }
+    /*class Item{
+        public Item() {
+        }
+
+        public String getShortDesc() {
+            return shortDesc;
+        }
+
+        public void setShortDesc(String shortDesc) {
+            this.shortDesc = shortDesc;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        private String shortDesc;
+        private String price;}*/
+
 }
+

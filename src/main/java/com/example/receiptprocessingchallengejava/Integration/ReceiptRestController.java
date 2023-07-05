@@ -25,10 +25,18 @@ public class ReceiptRestController {
     public Object createUUID(@RequestBody Receipt receipt){
         Gson gson = new Gson();
         HashMap<String, String> receiptHm = new HashMap<String, String>();
-        UUID uuid = UUID.randomUUID();
-        receiptHm.put("Testing UUID", uuid.toString());
-        receiptLibrary.put(uuid.toString(), receipt);
-        System.out.println(receiptLibrary);
+        String receiptString = gson.toJson(receipt);
+        Receipt processedReceipt = gson.fromJson(receiptString, Receipt.class);
+//        System.out.println("GOT RETAILER: " + processedReceipt.getRetailer());
+//        System.out.println("GOT PURCHASE DATE: " + processedReceipt.getPurchaseDate());
+//        System.out.println("GOT PURCHASE TIME: " + processedReceipt.getPurchaseTime());
+//        System.out.println("GOT TOTAL: " + processedReceipt.getTotal());
+        UUID uuid = UUID.nameUUIDFromBytes(processedReceipt.toString().getBytes());
+        receiptHm.put("id", uuid.toString());
+        receiptLibrary.put(String.valueOf(uuid), processedReceipt);
+        receiptLibrary.forEach((key, value) -> {
+            System.out.println("ID: " + key + "Receipt: " + value.toString());
+        });
         return receiptHm;
     }
 }
