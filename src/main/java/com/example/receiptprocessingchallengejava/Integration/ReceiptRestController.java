@@ -1,4 +1,5 @@
 package com.example.receiptprocessingchallengejava.Integration;
+import com.example.receiptprocessingchallengejava.Entities.Receipt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,6 +15,8 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.*;
 
+import static com.example.receiptprocessingchallengejava.Entities.Receipt.receiptList;
+
 @RestController
 public class ReceiptRestController {
     HashMap<String, JsonObject> receiptLibrary = new HashMap<String, JsonObject>();
@@ -24,9 +27,16 @@ public class ReceiptRestController {
         return hm;
     }
 
-    @GetMapping(value = "/receipts/processes")
-    public Object createUUID(){
+    @PostMapping(value = "/receipts/processes")
+    public Object createUUID(@RequestBody Receipt receipt){
         HashMap<String, String> receiptHm = new HashMap<String, String>();
+        Receipt processedReceipt = new Receipt();
+        processedReceipt.setRetailer(receipt.getRetailer());
+        processedReceipt.setPurchaseDate(receipt.getPurchaseDate());
+        processedReceipt.setPurchaseTime(receipt.getPurchaseTime());
+        processedReceipt.setItems(receipt.getItems());
+        processedReceipt.setTotal(receipt.getTotal());
+        receiptList.add(processedReceipt);
         UUID uuid = UUID.randomUUID();
         receiptHm.put("Testing UUID", uuid.toString());
         return receiptHm;
