@@ -73,7 +73,7 @@ public class ReceiptRestController {
         points += itemPointsToAssignPairs;
         points += itemPointsToAssignDesc;
         //One last little HashMap that will store a single key-value pair for our points to return.
-        HashMap<String, String> pointAmount = new HashMap<>();
+        Map<String, String> pointAmount = new HashMap<>();
         pointAmount.put("points", String.valueOf(points));
         return pointAmount;
     }
