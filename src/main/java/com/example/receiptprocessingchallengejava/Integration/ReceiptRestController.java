@@ -3,8 +3,7 @@ package com.example.receiptprocessingchallengejava.Integration;
 import com.example.receiptprocessingchallengejava.Models.Receipt;
 //Helper functions that will prove useful when parsing JSON and determining points.
 import com.example.receiptprocessingchallengejava.HelperFunctions.*;
-//For this project, I used Google's GSON parser.
-import com.google.gson.Gson;
+
 //Some needed Java Spring calls...
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
@@ -24,14 +23,14 @@ public class ReceiptRestController {
     * HashMap.*/
     @PostMapping(value = "/receipts/processes")
     public Object processReceipt(@RequestBody Receipt receipt){
-        Gson gson = new Gson();
+        //Giving this a random UUID.
+        UUID uuid = UUID.randomUUID();
+        String idResult = uuid.toString();
         //All this HashMap will ever do is store the single key-value pair of this receipt and its corresponding UUID.
-        HashMap<String, String> receiptHm = new HashMap<String, String>();
-        String receiptString = gson.toJson(receipt);
-        Receipt processedReceipt = gson.fromJson(receiptString, Receipt.class);
-        UUID uuid = UUID.nameUUIDFromBytes(processedReceipt.toString().getBytes());
-        receiptHm.put("id", uuid.toString());
-        receiptLibrary.put(String.valueOf(uuid), processedReceipt);
+        Map<String, String> receiptHm = new HashMap<>();
+        receiptHm.put("id", idResult);
+        //Serialize the new uuid/receipt k-v pair in our shared HashMap receiptLibrary.
+        receiptLibrary.put(idResult, receipt);
         return receiptHm;
     }
 
