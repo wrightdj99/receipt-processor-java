@@ -1,6 +1,6 @@
 package com.example.receiptprocessingchallengejava.Integration;
 //Getting our Receipt data class in
-import com.example.receiptprocessingchallengejava.Entities.Receipt;
+import com.example.receiptprocessingchallengejava.Models.Receipt;
 //Helper functions that will prove useful when parsing JSON and determining points.
 import com.example.receiptprocessingchallengejava.HelperFunctions.*;
 //For this project, I used Google's GSON parser.

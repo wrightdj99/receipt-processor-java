@@ -1,6 +1,6 @@
 package com.example.receiptprocessingchallengejava.HelperFunctions;
-import com.example.receiptprocessingchallengejava.Entities.Item;
-import com.example.receiptprocessingchallengejava.Entities.Receipt;
+import com.example.receiptprocessingchallengejava.Models.Item;
+import com.example.receiptprocessingchallengejava.Models.Receipt;
 /*Some of the longer helper methods in this program are here, but they're not too complex.
 * All we are really doing here is just checking for various things in our nested JSON Items array
 * that comes to this program via a request.*/

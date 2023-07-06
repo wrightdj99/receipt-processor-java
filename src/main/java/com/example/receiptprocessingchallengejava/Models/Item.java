@@ -1,4 +1,4 @@
-package com.example.receiptprocessingchallengejava.Entities;
+package com.example.receiptprocessingchallengejava.Models;
 /*Here we have the class that will be used to define a single item within
 * our JSON Receipts. All the items won't just be treated as Strings or simple arrays,
 * but rather as actual objects that the development team has the option

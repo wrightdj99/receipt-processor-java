@@ -1,4 +1,4 @@
-package com.example.receiptprocessingchallengejava.Entities;
+package com.example.receiptprocessingchallengejava.Models;
 import java.util.*;
 /*This is the data class that will represent all of our receipts. Every receipt will have
 a retailer, a purchaseDate, a purchaseTime, a total amount, and a JSON array of items bought.
