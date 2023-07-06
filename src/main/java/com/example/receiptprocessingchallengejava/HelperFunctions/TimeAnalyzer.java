@@ -1,7 +1,8 @@
 package com.example.receiptprocessingchallengejava.HelperFunctions;
-
 import java.time.LocalTime;
 
+/*Helper method timeIsBetween takes a before and after time and checks if the given time (purchaseTime) is between
+* those two times.*/
 public class TimeAnalyzer {
     public static boolean timeIsBetween(String before, String after, String time){
         LocalTime b = LocalTime.parse(before);

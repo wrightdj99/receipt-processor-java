@@ -1,2 +1,5 @@
 # receipt-processor-java
-This is my code for Fetch's Back-End Apprenticeship coding assessment.
+My name is Dan Wright, and this is my code repo for Fetch's Back-End Apprenticeship coding assessment.
+
+
+
