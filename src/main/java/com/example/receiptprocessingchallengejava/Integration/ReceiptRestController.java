@@ -40,13 +40,22 @@ public class ReceiptRestController {
     public Object getPoints(@PathVariable("id") String receiptId){
         //The workingReceipt will be retrieved from receiptLibrary.
         Receipt workingReceipt = receiptLibrary.get(receiptId);
-        //These will make our code a bit easier to read further down. Less risk of long calls.
-        String retailer = workingReceipt.getRetailer();
-        Date purchaseDate = workingReceipt.getPurchaseDate();
-        String purchaseTime = workingReceipt.getPurchaseTime();
-        String total = workingReceipt.getTotal();
-        //Points we'll return.
+        int points = pointsCalculator(workingReceipt);
+
+        Map<String, String> pointAmount = new HashMap<>();
+        pointAmount.put("points", String.valueOf(points));
+
+        return pointAmount;
+    }
+
+    private int pointsCalculator(Receipt receipt){
         int points = 0;
+        //These will make our code a bit easier to read further down. Less risk of long calls.
+        String retailer = receipt.getRetailer();
+        Date purchaseDate = receipt.getPurchaseDate();
+        String purchaseTime = receipt.getPurchaseTime();
+        String total = receipt.getTotal();
+
         //All that's left is to add up points with help from our HelperFunctions.
         //The ints and booleans will make the method calls, and then we'll add the
         //ints to the points value and use simple if-statements to check if the booleans are true.
@@ -55,8 +64,8 @@ public class ReceiptRestController {
         boolean totalIsMultiple = DollarAnalyzer.dollarIsMultipleOf(Float.parseFloat(total), 0.25F);
         boolean dayIsOdd = DateAnalyzer.dayIsOdd(purchaseDate);
         boolean purchaseIsBetween = TimeAnalyzer.timeIsBetween("16:00", "14:00", purchaseTime);
-        int itemPointsToAssignPairs = ItemAnalyzer.pointsEarnedByPairs(workingReceipt);
-        int itemPointsToAssignDesc = ItemAnalyzer.pointsEarnedByItemTitle(workingReceipt);
+        int itemPointsToAssignPairs = ItemAnalyzer.pointsEarnedByPairs(receipt);
+        int itemPointsToAssignDesc = ItemAnalyzer.pointsEarnedByItemTitle(receipt);
         if(totalIsWhole){
             points += 50;
         }
@@ -72,10 +81,8 @@ public class ReceiptRestController {
         points += retailerNameLen;
         points += itemPointsToAssignPairs;
         points += itemPointsToAssignDesc;
-        //One last little HashMap that will store a single key-value pair for our points to return.
-        Map<String, String> pointAmount = new HashMap<>();
-        pointAmount.put("points", String.valueOf(points));
-        return pointAmount;
+
+        return points;
     }
 
 }
