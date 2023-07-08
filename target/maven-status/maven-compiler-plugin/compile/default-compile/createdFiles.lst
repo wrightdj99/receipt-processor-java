@@ -1,0 +1,9 @@
+com/example/receiptprocessingchallengejava/ReceiptProcessingChallengeJavaApplication.class
+com/example/receiptprocessingchallengejava/Models/Receipt.class
+com/example/receiptprocessingchallengejava/HelperFunctions/CharAnalyzer.class
+com/example/receiptprocessingchallengejava/HelperFunctions/TimeAnalyzer.class
+com/example/receiptprocessingchallengejava/HelperFunctions/ItemAnalyzer.class
+com/example/receiptprocessingchallengejava/Models/Item.class
+com/example/receiptprocessingchallengejava/HelperFunctions/DateAnalyzer.class
+com/example/receiptprocessingchallengejava/Integration/ReceiptRestController.class
+com/example/receiptprocessingchallengejava/HelperFunctions/DollarAnalyzer.class
